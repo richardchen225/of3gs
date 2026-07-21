@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Project page for FreeStreamGS: Online Feed-forward 3D Gaussian Splatting from Unposed Streaming Inputs.">
-  <title>FreeStreamGS</title>
+  <meta name="description" content="Project page for OF3GS: On-the-Fly Feed-Forward 3D Gaussian Splatting from Unposed Images.">
+  <title>OF3GS: On-the-Fly Feed-Forward 3D Gaussian Splatting from Unposed Images</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
@@ -280,11 +280,13 @@
       white-space: nowrap;
     }
 
-    .metrics th:first-child,
-    .metrics td:first-child,
-    .metrics th:nth-child(2),
-    .metrics td:nth-child(2) {
+    .metrics .dataset-cell,
+    .metrics .method-cell {
       text-align: left;
+    }
+
+    .metrics .online-cell {
+      text-align: center;
     }
 
     .metrics thead th {
@@ -301,6 +303,14 @@
       background: #f7fbf8;
       color: #17261d;
       font-weight: 700;
+    }
+
+    .metrics td.best {
+      background: #f4b3b5;
+    }
+
+    .metrics td.second {
+      background: #fff0a8;
     }
 
     .nvs-grid {
@@ -426,20 +436,20 @@
   <header class="hero">
     <div class="container">
       <p class="venue">arXiv 2026</p>
-      <h1>FreeStreamGS: Online Feed-forward 3D Gaussian Splatting from Unposed Streaming Inputs</h1>
-      <p class="subtitle">TL;DR: A causal feed-forward framework for online 3DGS and NVS from streaming, unposed image inputs.</p>
+      <h1>OF<sup>3</sup>GS: <u>O</u>n-the-<u>F</u>ly <u>F</u>eed-<u>F</u>orward 3D <u>G</u>aussian <u>S</u>platting from Unposed Images</h1>
+      <p class="subtitle">TL;DR: An on-the-fly feed-forward framework for online 3DGS and NVS from unposed image inputs.</p>
       <div class="authors">
         <span>Ruiyang Chen<sup>1</sup></span>
-        <span>Feiran Li<sup>3</sup></span>
-        <span><a href="https://fourson.github.io/" target="_blank" rel="noreferrer">Chu Zhou</a><sup>2</sup></span>
+        <span>Feiran Li<sup>2</sup></span>
+        <span><a href="https://fourson.github.io/" target="_blank" rel="noreferrer">Chu Zhou</a><sup>3</sup></span>
         <span>Zonglin Li<sup>1</sup></span>
         <span><a href="https://zhanyuma.cn/" target="_blank" rel="noreferrer">Zhanyu Ma</a><sup>1</sup></span>
         <span><a href="https://gh-home.github.io/" target="_blank" rel="noreferrer">Heng Guo</a><sup>1,*</sup></span>
       </div>
       <div class="affiliations">
         <span><sup>1</sup>Beijing University of Posts and Telecommunications, China</span>
-        <span><sup>2</sup>National Institute of Informatics, Japan</span>
-        <span><sup>3</sup>Independent Researcher</span>
+        <span><sup>2</sup>Independent Researcher</span>
+        <span><sup>3</sup>National Institute of Informatics, Japan</span>
         <span><sup>*</sup>Corresponding author</span>
       </div>
       <nav class="buttons" aria-label="Project links">
@@ -451,15 +461,15 @@
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v13A2.5 2.5 0 0 1 17.5 21h-11A2.5 2.5 0 0 1 4 18.5v-13Zm3 2V9h10V7.5H7Zm0 4V13h10v-1.5H7Zm0 4V17h7v-1.5H7Z"/></svg>
           arXiv
         </a>
-        <a class="button secondary" href="https://github.com/richardchen225/FreeStreamGS_code" target="_blank" rel="noreferrer">
+        <a class="button secondary" href="https://github.com/richardchen225/OF3GS_code" target="_blank" rel="noreferrer">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m12 2 9 5v10l-9 5-9-5V7l9-5Zm0 2.3L5.5 8 12 11.7 18.5 8 12 4.3ZM5 9.7v5.9l6 3.4v-5.9L5 9.7Zm8 9.3 6-3.4V9.7l-6 3.4V19Z"/></svg>
           Code
         </a>
       </nav>
       <figure class="teaser">
-        <img src="static/images/teaser.png" alt="FreeStreamGS incrementally reconstructs 3D Gaussian scenes from streaming inputs and renders novel views.">
+        <img src="static/images/teaser.png" alt="OF3GS incrementally reconstructs 3D Gaussian scenes from streaming inputs and renders novel views.">
       </figure>
-      <p class="caption">FreeStreamGS incrementally reconstructs renderable 3D Gaussian representations from unposed video streams for online 3DGS and NVS.</p>
+      <p class="caption">OF<sup>3</sup>GS incrementally reconstructs renderable 3D Gaussian representations from unposed video streams for online 3DGS and NVS.</p>
     </div>
   </header>
 
@@ -468,7 +478,7 @@
       <div class="container">
         <h2>Abstract</h2>
         <div class="prose">
-          <p>Feed-forward 3D Gaussian Splatting (3DGS) allows efficient and high-fidelity novel view synthesis (NVS) from an offline recorded image sequence. However, achieving online NVS from streaming and unposed image inputs remains challenging. Although online feed-forward geometric estimation methods have been proposed for streaming depth and point cloud recovery, they cannot be adapted to NVS due to severe rendering artifacts. This is because NVS demands stricter multi-view consistency in Gaussian scales and pose-geometry alignment; even minor deviations would accumulate over time and visibly degrade rendering quality. To this end, we propose FreeStreamGS, a robust online feed-forward framework for efficient and high-quality NVS. We introduce two key mechanisms: a Decoupled Intrinsic Recovery Head that removes cumulative camera intrinsic bias and prevents scene scale jitter during long-term streaming, and a Dynamic Point Refinement Offset strategy that relaxes rigid unprojection to correct coupled pose-depth drift. Extensive experiments show that FreeStreamGS achieves rendering quality competitive with state-of-the-art offline feed-forward 3DGS methods, despite operating without access to future frames.</p>
+          <p>Feed-forward 3D Gaussian Splatting (3DGS) enables efficient and high-fidelity novel view synthesis (NVS) from offline image sequences. However, achieving on-the-fly NVS from unposed images remains challenging: the system must reconstruct renderable 3D Gaussians as images arrive, without access to future observations. Although online feed-forward geometry methods have been developed for causal depth and point-cloud recovery, directly adapting them to NVS often leads to severe rendering artifacts because Gaussian-based rendering demands stricter multi-view consistency in primitive scale and pose-geometry alignment. Even minor deviations can accumulate under causal inference and visibly degrade rendering quality. To this end, we propose <em>OF3GS</em>, a feed-forward framework for efficient and high-quality on-the-fly NVS from sparse-view unposed images under causal constraints. We introduce two mechanisms for causal geometric stability: a <em>Decoupled Intrinsic Recovery Head</em> that mitigates cumulative camera-intrinsic bias and scene-scale jitter, and <em>Dynamic Point Refinement Offsets</em> that relax rigid unprojection to compensate for coupled pose-depth drift. Extensive experiments show that OF3GS outperforms online baselines and approaches offline feed-forward 3DGS methods under comparable sparse-input settings. It also remains memory-feasible with denser inputs.</p>
         </div>
       </div>
     </section>
@@ -477,7 +487,7 @@
       <div class="container">
         <h2>Method</h2>
         <figure class="figure padded">
-          <img src="static/images/pipeline-1.png" alt="Overview of the FreeStreamGS pipeline.">
+          <img src="static/images/pipeline-1.png" alt="Overview of the OF3GS pipeline.">
         </figure>
         <p class="caption">The pipeline uses causal feature extraction, decoupled camera recovery, Gaussian decoding with DPR-Offsets, and online recursive Gaussian fusion.</p>
         <div class="pill-row">
@@ -504,137 +514,110 @@
           <table class="metrics" aria-label="Quantitative novel view synthesis results">
             <thead>
               <tr>
-                <th>Dataset</th>
-                <th>Method</th>
-                <th>Online</th>
-                <th>5-view PSNR</th>
-                <th>5-view SSIM</th>
-                <th>5-view LPIPS</th>
-                <th>64-view PSNR</th>
-                <th>64-view SSIM</th>
-                <th>64-view LPIPS</th>
+                <th class="dataset-cell" rowspan="2">Dataset</th>
+                <th class="method-cell" rowspan="2">Method</th>
+                <th class="online-cell" rowspan="2">Online</th>
+                <th colspan="3">Input Views: 5</th>
+                <th colspan="3">Input Views: 10</th>
+                <th colspan="3">Input Views: 64</th>
+                <th colspan="3">Input Views: 128</th>
+              </tr>
+              <tr>
+                <th>PSNR &uarr;</th><th>SSIM &uarr;</th><th>LPIPS &darr;</th>
+                <th>PSNR &uarr;</th><th>SSIM &uarr;</th><th>LPIPS &darr;</th>
+                <th>PSNR &uarr;</th><th>SSIM &uarr;</th><th>LPIPS &darr;</th>
+                <th>PSNR &uarr;</th><th>SSIM &uarr;</th><th>LPIPS &darr;</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>DL3DV-140</td>
-                <td>WorldMirror</td>
-                <td>No</td>
-                <td>21.559</td>
-                <td>0.673</td>
-                <td>0.285</td>
-                <td>OOM</td>
-                <td>OOM</td>
-                <td>OOM</td>
+                <td class="dataset-cell" rowspan="6">DL3DV-140</td><td class="method-cell">FLARE</td><td class="online-cell">No</td>
+                <td>13.984</td><td>0.580</td><td>0.420</td><td>13.720</td><td>0.610</td><td>0.422</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td>
               </tr>
               <tr>
-                <td>DL3DV-140</td>
-                <td>OnTheFly-NVS</td>
-                <td>Yes</td>
-                <td>21.030</td>
-                <td>0.644</td>
-                <td>0.325</td>
-                <td>18.478</td>
-                <td>0.610</td>
-                <td>0.455</td>
+                <td class="method-cell">AnySplat</td><td class="online-cell">No</td>
+                <td>19.139</td><td>0.577</td><td>0.388</td><td>18.268</td><td>0.563</td><td>0.422</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td>
+              </tr>
+              <tr>
+                <td class="method-cell">WorldMirror</td><td class="online-cell">No</td>
+                <td class="second">21.559</td><td class="second">0.673</td><td class="second">0.285</td><td class="best">20.503</td><td class="best">0.685</td><td class="best">0.320</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td>
+              </tr>
+              <tr>
+                <td class="method-cell">OnTheFly-NVS</td><td class="online-cell">Yes</td>
+                <td>21.030</td><td>0.644</td><td>0.325</td><td>19.470</td><td>0.612</td><td>0.393</td><td class="best">18.478</td><td class="best">0.610</td><td class="best">0.455</td><td class="best">17.259</td><td class="best">0.566</td><td class="best">0.424</td>
+              </tr>
+              <tr>
+                <td class="method-cell">SVGGT+GS</td><td class="online-cell">Yes</td>
+                <td>19.726</td><td>0.599</td><td>0.338</td><td>17.614</td><td>0.532</td><td>0.443</td><td>16.132</td><td>0.467</td><td>0.535</td><td>15.129</td><td>0.486</td><td>0.514</td>
               </tr>
               <tr class="ours-row">
-                <td>DL3DV-140</td>
-                <td>FreeStreamGS</td>
-                <td>Yes</td>
-                <td>21.884</td>
-                <td>0.688</td>
-                <td>0.273</td>
-                <td>17.190</td>
-                <td>0.558</td>
-                <td>0.485</td>
+                <td class="method-cell">OF<sup>3</sup>GS</td><td class="online-cell">Yes</td>
+                <td class="best">21.884</td><td class="best">0.688</td><td class="best">0.273</td><td class="second">19.952</td><td class="second">0.629</td><td class="second">0.373</td><td class="second">17.190</td><td class="second">0.558</td><td class="second">0.485</td><td class="second">16.377</td><td class="second">0.530</td><td class="second">0.461</td>
+              </tr>
+
+              <tr>
+                <td class="dataset-cell" rowspan="6">RE10K</td><td class="method-cell">FLARE</td><td class="online-cell">No</td>
+                <td>13.485</td><td>0.262</td><td>0.670</td><td>13.244</td><td>0.263</td><td>0.676</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td>
               </tr>
               <tr>
-                <td>RE10K</td>
-                <td>WorldMirror</td>
-                <td>No</td>
-                <td>25.419</td>
-                <td>0.820</td>
-                <td>0.203</td>
-                <td>OOM</td>
-                <td>OOM</td>
-                <td>OOM</td>
+                <td class="method-cell">AnySplat</td><td class="online-cell">No</td>
+                <td>23.034</td><td>0.753</td><td>0.251</td><td>22.189</td><td>0.752</td><td>0.288</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td>
               </tr>
               <tr>
-                <td>RE10K</td>
-                <td>OnTheFly-NVS</td>
-                <td>Yes</td>
-                <td>20.829</td>
-                <td>0.815</td>
-                <td>0.290</td>
-                <td>20.985</td>
-                <td>0.767</td>
-                <td>0.303</td>
+                <td class="method-cell">WorldMirror</td><td class="online-cell">No</td>
+                <td class="second">25.419</td><td class="second">0.820</td><td class="second">0.203</td><td class="best">25.158</td><td class="best">0.828</td><td class="best">0.216</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td>
+              </tr>
+              <tr>
+                <td class="method-cell">OnTheFly-NVS</td><td class="online-cell">Yes</td>
+                <td>20.829</td><td>0.815</td><td>0.290</td><td>22.881</td><td>0.759</td><td>0.329</td><td class="second">20.985</td><td class="best">0.767</td><td class="second">0.303</td><td class="second">20.071</td><td class="second">0.725</td><td class="second">0.342</td>
+              </tr>
+              <tr>
+                <td class="method-cell">SVGGT+GS</td><td class="online-cell">Yes</td>
+                <td>23.767</td><td>0.776</td><td>0.234</td><td>22.427</td><td>0.742</td><td>0.283</td><td>19.431</td><td>0.698</td><td>0.323</td><td>19.245</td><td>0.675</td><td>0.354</td>
               </tr>
               <tr class="ours-row">
-                <td>RE10K</td>
-                <td>FreeStreamGS</td>
-                <td>Yes</td>
-                <td>25.797</td>
-                <td>0.833</td>
-                <td>0.200</td>
-                <td>21.562</td>
-                <td>0.749</td>
-                <td>0.297</td>
+                <td class="method-cell">OF<sup>3</sup>GS</td><td class="online-cell">Yes</td>
+                <td class="best">25.797</td><td class="best">0.833</td><td class="best">0.200</td><td class="second">24.536</td><td class="second">0.801</td><td class="second">0.241</td><td class="best">21.562</td><td class="second">0.749</td><td class="best">0.297</td><td class="best">20.598</td><td class="best">0.732</td><td class="best">0.322</td>
+              </tr>
+
+              <tr>
+                <td class="dataset-cell" rowspan="6">NYUv2</td><td class="method-cell">FLARE</td><td class="online-cell">No</td>
+                <td>14.643</td><td>0.505</td><td>0.619</td><td>14.598</td><td>0.504</td><td>0.622</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td>
+              </tr>
+              <tr>
+                <td class="method-cell">AnySplat</td><td class="online-cell">No</td>
+                <td>22.047</td><td>0.648</td><td>0.319</td><td>22.024</td><td>0.660</td><td>0.334</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td>
+              </tr>
+              <tr>
+                <td class="method-cell">WorldMirror</td><td class="online-cell">No</td>
+                <td class="second">24.750</td><td class="second">0.713</td><td class="second">0.303</td><td class="best">24.212</td><td class="best">0.694</td><td class="best">0.297</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td><td>OOM</td>
+              </tr>
+              <tr>
+                <td class="method-cell">OnTheFly-NVS</td><td class="online-cell">Yes</td>
+                <td>20.875</td><td>0.635</td><td>0.376</td><td>22.515</td><td>0.629</td><td>0.323</td><td class="best">23.174</td><td class="best">0.679</td><td class="best">0.352</td><td class="best">21.454</td><td class="best">0.690</td><td class="best">0.351</td>
+              </tr>
+              <tr>
+                <td class="method-cell">SVGGT+GS</td><td class="online-cell">Yes</td>
+                <td>22.892</td><td>0.674</td><td>0.318</td><td>21.413</td><td>0.633</td><td>0.331</td><td>19.246</td><td>0.598</td><td>0.385</td><td>18.385</td><td>0.576</td><td>0.401</td>
+              </tr>
+              <tr class="ours-row">
+                <td class="method-cell">OF<sup>3</sup>GS</td><td class="online-cell">Yes</td>
+                <td class="best">24.875</td><td class="best">0.717</td><td class="best">0.291</td><td class="second">23.215</td><td class="second">0.684</td><td class="second">0.307</td><td class="second">21.253</td><td class="second">0.652</td><td class="second">0.361</td><td class="second">20.427</td><td class="second">0.632</td><td class="second">0.382</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p class="caption">FreeStreamGS is evaluated under strict online constraints and remains scalable when offline feed-forward baselines run out of memory.</p>
+        <p class="caption">OF<sup>3</sup>GS is evaluated under strict online constraints and remains scalable when offline feed-forward baselines run out of memory. Best and second-best results are highlighted in red and yellow, respectively.</p>
       </div>
     </section>
 
     <section>
       <div class="container">
         <h2>Qualitative Results</h2>
-        <div class="nvs-grid" aria-label="Novel view synthesis qualitative comparison">
-          <div class="grid-head">
-            <div>GT</div>
-            <div>FreeStreamGS</div>
-            <div>OnTheFly-NVS</div>
-            <div>WorldMirror</div>
-            <div>AnySplat</div>
-            <div>FLARE</div>
-          </div>
-          <div class="grid-row">
-            <img src="static/images/nvs/dl3dv_0bfdd_gt-1.png" alt="DL3DV ground truth sample 1">
-            <img src="static/images/nvs/dl3dv_0bfdd_me-1.png" alt="FreeStreamGS DL3DV sample 1">
-            <img src="static/images/nvs/dl3dv_0bfdd_fly-1.png" alt="OnTheFly-NVS DL3DV sample 1">
-            <img src="static/images/nvs/dl3dv_0bfdd_wm-1.png" alt="WorldMirror DL3DV sample 1">
-            <img src="static/images/nvs/dl3dv_0bfdd_any-1.png" alt="AnySplat DL3DV sample 1">
-            <img src="static/images/nvs/dl3dv_0bfdd_flare-1.png" alt="FLARE DL3DV sample 1">
-          </div>
-          <div class="grid-row">
-            <img src="static/images/nvs/dl3dv_0a1b7_gt-1.png" alt="DL3DV ground truth sample 2">
-            <img src="static/images/nvs/dl3dv_0a1b7_me-1.png" alt="FreeStreamGS DL3DV sample 2">
-            <img src="static/images/nvs/dl3dv_0a1b7_fly-1.png" alt="OnTheFly-NVS DL3DV sample 2">
-            <img src="static/images/nvs/dl3dv_0a1b7_wm-1.png" alt="WorldMirror DL3DV sample 2">
-            <img src="static/images/nvs/dl3dv_0a1b7_any-1.png" alt="AnySplat DL3DV sample 2">
-            <img src="static/images/nvs/dl3dv_0a1b7_flare-1.png" alt="FLARE DL3DV sample 2">
-          </div>
-          <div class="grid-row">
-            <img src="static/images/nvs/re10k_70a44_gt-1.png" alt="RE10K ground truth sample 1">
-            <img src="static/images/nvs/re10k_70a44_me-1.png" alt="FreeStreamGS RE10K sample 1">
-            <img src="static/images/nvs/re10k_70a44_fly-1.png" alt="OnTheFly-NVS RE10K sample 1">
-            <img src="static/images/nvs/re10k_70a44_wm-1.png" alt="WorldMirror RE10K sample 1">
-            <img src="static/images/nvs/re10k_70a44_any-1.png" alt="AnySplat RE10K sample 1">
-            <img src="static/images/nvs/re10k_70a44_flare-1.png" alt="FLARE RE10K sample 1">
-          </div>
-          <div class="grid-row">
-            <img src="static/images/nvs/re10k_ecc60_gt-1.png" alt="RE10K ground truth sample 2">
-            <img src="static/images/nvs/re10k_ecc60_me-1.png" alt="FreeStreamGS RE10K sample 2">
-            <img src="static/images/nvs/re10k_ecc60_fly-1.png" alt="OnTheFly-NVS RE10K sample 2">
-            <img src="static/images/nvs/re10k_ecc60_wm-1.png" alt="WorldMirror RE10K sample 2">
-            <img src="static/images/nvs/re10k_ecc60_any-1.png" alt="AnySplat RE10K sample 2">
-            <img src="static/images/nvs/re10k_ecc60_flare-1.png" alt="FLARE RE10K sample 2">
-          </div>
-        </div>
-        <p class="caption">Qualitative comparison on DL3DV-140 and RE10K. FreeStreamGS preserves structural detail while operating causally.</p>
+        <figure class="figure">
+          <img src="static/images/qualitative.png" alt="Qualitative comparison of OF3GS with SVGGT+GS, OnTheFly-NVS, WorldMirror, AnySplat, and FLARE on DL3DV-140, RE10K, and NYUv2.">
+        </figure>
+        <p class="caption">Qualitative comparison on DL3DV-140, RE10K, and unseen NYUv2. OF<sup>3</sup>GS produces high-quality novel view renderings while preserving fine structural details.</p>
       </div>
     </section>
 
@@ -642,19 +625,19 @@
       <div class="container">
         <h2>Video Stabilization</h2>
         <div class="application-strip">
-          <img src="static/images/stabilization_15-1.png" alt="FreeStreamGS video stabilization result 15">
-          <img src="static/images/stabilization_21-1.png" alt="FreeStreamGS video stabilization result 21">
-          <img src="static/images/stabilization_25-1.png" alt="FreeStreamGS video stabilization result 25">
+          <img src="static/images/stabilization_15-1.png" alt="OF3GS video stabilization result 15">
+          <img src="static/images/stabilization_21-1.png" alt="OF3GS video stabilization result 21">
+          <img src="static/images/stabilization_25-1.png" alt="OF3GS video stabilization result 25">
         </div>
-        <p class="caption">Once a causal Gaussian representation is available, FreeStreamGS can render stabilized views along smoothed camera trajectories.</p>
+        <p class="caption">Once a causal Gaussian representation is available, OF3GS can render stabilized views along smoothed camera trajectories.</p>
       </div>
     </section>
 
     <section>
       <div class="container">
         <h2>BibTeX</h2>
-        <pre class="bibtex">@article{chen2026freestreamgs,
-  title   = {FreeStreamGS: Online Feed-forward 3D Gaussian Splatting from Unposed Streaming Inputs},
+        <pre class="bibtex">@article{chen2026of3gs,
+  title   = {OF3GS: On-the-Fly Feed-Forward 3D Gaussian Splatting from Unposed Images},
   author  = {Chen, Ruiyang and Li, Feiran and Zhou, Chu and Li, Zonglin and Ma, Zhanyu and Guo, Heng},
   journal = {arXiv preprint arXiv:2606.03254},
   year    = {2026}
